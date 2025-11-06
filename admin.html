@@ -1,0 +1,505 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Dashboard - LocalBazar</title>
+    <meta name="description" content="LocalBazar Admin Panel - Manage your online store">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/localbazar-custom.css">
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card h3 {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .stat-card .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0d9488;
+        }
+
+        .stat-card.orange .stat-number {
+            color: #f97316;
+        }
+
+        .stat-card.blue .stat-number {
+            color: #3b82f6;
+        }
+
+        .stat-card.green .stat-number {
+            color: #10b981;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 30px 0 20px;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .data-table table {
+            width: 100%;
+            margin: 0;
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            border: none;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .badge-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-pending {
+            background: #fed7aa;
+            color: #92400e;
+        }
+
+        .badge-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .btn-action {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 5px;
+        }
+
+        .btn-edit {
+            background: #0d9488;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #0f766e;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .btn-back {
+            background: white;
+            color: #0d9488;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #0d9488;
+            color: white;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .quick-action-btn {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+        }
+
+        .quick-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+            color: white;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .demo-badge {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1>
+                        <span class="logo-text">Local<span class="bazar">Bazar</span></span>
+                        Admin
+                        <span class="demo-badge">DEMO</span>
+                    </h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Store</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="#products" class="quick-action-btn"><i class="fas fa-plus"></i> Add Product</a>
+            <a href="#orders" class="quick-action-btn"><i class="fas fa-box"></i> View Orders</a>
+            <a href="#" class="quick-action-btn"><i class="fas fa-users"></i> Manage Customers</a>
+            <a href="#" class="quick-action-btn"><i class="fas fa-chart-line"></i> View Reports</a>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <h3>Total Sales</h3>
+                    <div class="stat-number">$24,580</div>
+                    <small style="color: #10b981;"><i class="fas fa-arrow-up"></i> 12% from last month</small>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card orange">
+                    <h3>Total Orders</h3>
+                    <div class="stat-number">342</div>
+                    <small style="color: #f97316;"><i class="fas fa-arrow-up"></i> 8% from last month</small>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card blue">
+                    <h3>Products</h3>
+                    <div class="stat-number">156</div>
+                    <small style="color: #3b82f6;">Active inventory</small>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card green">
+                    <h3>Customers</h3>
+                    <div class="stat-number">1,284</div>
+                    <small style="color: #10b981;"><i class="fas fa-arrow-up"></i> 15% from last month</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sales Chart -->
+        <h2 class="section-title">Sales Overview</h2>
+        <div class="chart-container">
+            <p><i class="fas fa-chart-area" style="font-size: 48px; margin-bottom: 15px;"></i><br>
+                Chart visualization would be displayed here<br>
+                <small>(Demo Mode - Chart.js integration recommended)</small>
+            </p>
+        </div>
+
+        <!-- Recent Orders -->
+        <h2 class="section-title" id="orders">Recent Orders</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#ORD-1001</td>
+                        <td>John Doe</td>
+                        <td>Organic Vegetables Pack</td>
+                        <td>$45.00</td>
+                        <td><span class="badge-status badge-success">Delivered</span></td>
+                        <td>2025-11-05</td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1002</td>
+                        <td>Jane Smith</td>
+                        <td>Fresh Fruits Basket</td>
+                        <td>$38.50</td>
+                        <td><span class="badge-status badge-processing">Processing</span></td>
+                        <td>2025-11-06</td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1003</td>
+                        <td>Mike Johnson</td>
+                        <td>Dairy Products Bundle</td>
+                        <td>$52.00</td>
+                        <td><span class="badge-status badge-pending">Pending</span></td>
+                        <td>2025-11-06</td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1004</td>
+                        <td>Sarah Williams</td>
+                        <td>Local Honey & Jam Set</td>
+                        <td>$28.75</td>
+                        <td><span class="badge-status badge-success">Delivered</span></td>
+                        <td>2025-11-04</td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1005</td>
+                        <td>David Brown</td>
+                        <td>Handmade Crafts</td>
+                        <td>$67.00</td>
+                        <td><span class="badge-status badge-processing">Processing</span></td>
+                        <td>2025-11-06</td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-eye"></i> View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Product Management -->
+        <h2 class="section-title" id="products">Product Management</h2>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#PRD-001</td>
+                        <td>Organic Tomatoes</td>
+                        <td>Vegetables</td>
+                        <td>$4.99</td>
+                        <td>85</td>
+                        <td><span class="badge-status badge-success">Active</span></td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#PRD-002</td>
+                        <td>Fresh Mangoes</td>
+                        <td>Fruits</td>
+                        <td>$6.50</td>
+                        <td>42</td>
+                        <td><span class="badge-status badge-success">Active</span></td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#PRD-003</td>
+                        <td>Organic Milk</td>
+                        <td>Dairy</td>
+                        <td>$3.25</td>
+                        <td>120</td>
+                        <td><span class="badge-status badge-success">Active</span></td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#PRD-004</td>
+                        <td>Local Honey</td>
+                        <td>Organic Products</td>
+                        <td>$12.99</td>
+                        <td>28</td>
+                        <td><span class="badge-status badge-success">Active</span></td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#PRD-005</td>
+                        <td>Handcrafted Basket</td>
+                        <td>Crafts</td>
+                        <td>$24.50</td>
+                        <td>15</td>
+                        <td><span class="badge-status badge-pending">Low Stock</span></td>
+                        <td>
+                            <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin: 40px 0 20px; padding: 20px; background: white; border-radius: 15px;">
+            <p style="color: #64748b; margin: 0;">
+                <strong>LocalBazar Admin Panel (Demo)</strong><br>
+                <small>This is a demonstration admin interface. No actual data modifications will be saved.</small><br>
+                <small style="color: #0d9488;">🎨 Designed by AKMutiVision Web Design</small>
+            </p>
+        </div>
+
+    </main>
+
+    <!-- JS here -->
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+
+    <script>
+        // Demo functionality
+        document.querySelectorAll('.btn-edit, .btn-delete').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const action = this.classList.contains('btn-delete') ? 'delete' : 'edit';
+                const row = this.closest('tr');
+                const itemName = row.cells[1].textContent;
+
+                if (action === 'delete') {
+                    if (confirm(`Are you sure you want to ${action} "${itemName}"?\n\n(Demo Mode - No actual changes will be made)`)) {
+                        alert('Item would be deleted in production mode');
+                    }
+                } else {
+                    alert(`Edit interface for "${itemName}" would open here\n\n(Demo Mode)`);
+                }
+            });
+        });
+
+        document.querySelectorAll('.quick-action-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                if (!this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    alert('This action would open the respective interface\n\n(Demo Mode)');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
