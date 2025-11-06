@@ -87,8 +87,8 @@ estore-master/
 
 1. **Clone or Download** the project:
    ```bash
-   git clone <repository-url>
-   cd estore-master
+   git clone https://github.com/techabbayi/localbazar-demo-akmultivision
+   cd localbazar-demo-akmultivision
    ```
 
 2. **Open in Browser**:
